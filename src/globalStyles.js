@@ -1,6 +1,6 @@
 import 'modern-normalize/modern-normalize.css';
 
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import RobotoBlack from './assets/fonts/Roboto-Black.ttf';
 import RobotoBold from './assets/fonts/Roboto-Bold.ttf';
@@ -9,11 +9,20 @@ import RobotoRegular from './assets/fonts/Roboto-Regular.ttf';
 
 export const GlobalStyle = createGlobalStyle`
 
+:root{
+--main-text-color: #121417;
+--active-color: #F4C550;
+--transition: 250ms ease-in-out;
+--color-text-content: #8A8A89;
+--button-background-color: #f4c550;
+--active-button-background-color: #FFDC86;
+}
+
 body{
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
+  color: #121417;
 }
 
 p,
@@ -76,4 +85,10 @@ a{
     font-display: swap;
   }
 
+`;
+
+export const Container = styled.div`
+  max-width: 1440px;
+  padding: 0 64px;
+  margin: 0 auto;
 `;
