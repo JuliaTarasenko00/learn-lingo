@@ -1,17 +1,29 @@
 {
   "files": {
     "main.css": "/learn-lingo/static/css/main.7cda0caf.css",
-    "main.js": "/learn-lingo/static/js/main.feaf453e.js",
+    "main.js": "/learn-lingo/static/js/main.1bbba705.js",
+    "static/js/49.6152d110.chunk.js": "/learn-lingo/static/js/49.6152d110.chunk.js",
+    "static/js/416.5322ac55.chunk.js": "/learn-lingo/static/js/416.5322ac55.chunk.js",
+    "static/js/565.b8d9f185.chunk.js": "/learn-lingo/static/js/565.b8d9f185.chunk.js",
+    "static/js/548.38021539.chunk.js": "/learn-lingo/static/js/548.38021539.chunk.js",
+    "static/js/313.80236c6d.chunk.js": "/learn-lingo/static/js/313.80236c6d.chunk.js",
     "static/media/Roboto-Medium.ttf": "/learn-lingo/static/media/Roboto-Medium.7c8d04cd831df3033c8a.ttf",
     "static/media/Roboto-Regular.ttf": "/learn-lingo/static/media/Roboto-Regular.fc2b5060f7accec5cf74.ttf",
     "static/media/Roboto-Black.ttf": "/learn-lingo/static/media/Roboto-Black.cf56c1b149d0a5e8d7c6.ttf",
     "static/media/Roboto-Bold.ttf": "/learn-lingo/static/media/Roboto-Bold.f80816a5455d171f948d.ttf",
+    "static/media/girl.png": "/learn-lingo/static/media/girl.9b8dc76fa337002d4fb5.png",
+    "static/media/macimg.png": "/learn-lingo/static/media/macimg.7e3b089580790a68b20d.png",
     "index.html": "/learn-lingo/index.html",
     "main.7cda0caf.css.map": "/learn-lingo/static/css/main.7cda0caf.css.map",
-    "main.feaf453e.js.map": "/learn-lingo/static/js/main.feaf453e.js.map"
+    "main.1bbba705.js.map": "/learn-lingo/static/js/main.1bbba705.js.map",
+    "49.6152d110.chunk.js.map": "/learn-lingo/static/js/49.6152d110.chunk.js.map",
+    "416.5322ac55.chunk.js.map": "/learn-lingo/static/js/416.5322ac55.chunk.js.map",
+    "565.b8d9f185.chunk.js.map": "/learn-lingo/static/js/565.b8d9f185.chunk.js.map",
+    "548.38021539.chunk.js.map": "/learn-lingo/static/js/548.38021539.chunk.js.map",
+    "313.80236c6d.chunk.js.map": "/learn-lingo/static/js/313.80236c6d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7cda0caf.css",
-    "static/js/main.feaf453e.js"
+    "static/js/main.1bbba705.js"
   ]
 }
