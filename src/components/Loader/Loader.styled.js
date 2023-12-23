@@ -1,6 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 
 export const Section = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5000;
   height: 100vh;
   background-color: #fff;
   overflow: hidden;

@@ -17,8 +17,14 @@ import {
   WrapperLogo,
 } from './Layout.styled';
 import { Loader } from 'components/Loader/Loader';
+import { useModal } from 'helpers/useModal';
+import { ModalComponent } from 'components/Modal/Modal';
+import { Register } from 'components/FormAut/Register';
+import { Login } from 'components/FormAut/Login';
 
 const Layout = () => {
+  const { isOpen, openModal, closeModal } = useModal();
+
   return (
     <>
       <Header>
@@ -47,7 +53,7 @@ const Layout = () => {
             </Nav>
             <WrapperAut>
               <li>
-                <ButtonLogin type="button">
+                <ButtonLogin type="button" onClick={() => openModal('login')}>
                   <span>
                     <FiLogIn />
                   </span>
@@ -55,11 +61,26 @@ const Layout = () => {
                 </ButtonLogin>
               </li>
               <li>
-                <ButtonRegister type="button">Register</ButtonRegister>
+                <ButtonRegister
+                  type="button"
+                  onClick={() => openModal('register')}
+                >
+                  Register
+                </ButtonRegister>
               </li>
             </WrapperAut>
           </HeaderContainer>
         </Container>
+        {isOpen.open && isOpen.name === 'login' && (
+          <ModalComponent onClose={closeModal}>
+            <Login />
+          </ModalComponent>
+        )}
+        {isOpen.open && isOpen.name === 'register' && (
+          <ModalComponent onClose={closeModal}>
+            <Register />
+          </ModalComponent>
+        )}
       </Header>
       <main>
         <Suspense fallback={<Loader />}>
