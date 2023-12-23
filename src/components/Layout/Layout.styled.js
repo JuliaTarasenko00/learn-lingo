@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  padding: 20px 64px 0 64px;
+  padding: 20px 64px 15px 64px;
 `;
 
 export const HeaderContainer = styled.div`
@@ -21,7 +21,6 @@ export const ImgLogo = styled.img``;
 
 export const TitleLogo = styled.p`
   color: var(--main-text-color);
-  font-family: Roboto;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.2;

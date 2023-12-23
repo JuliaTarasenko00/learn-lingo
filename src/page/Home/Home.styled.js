@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Section = styled.section`
-  padding-top: 30px;
+  padding-top: 15px;
   padding-bottom: 32px;
 `;
 

@@ -1,3 +1,4 @@
+import { Loader } from 'components/Loader/Loader';
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ const Favorite = lazy(() => import('./page/Favorite/Favorite'));
 
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

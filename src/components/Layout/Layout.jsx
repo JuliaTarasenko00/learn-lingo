@@ -16,6 +16,7 @@ import {
   WrapperAut,
   WrapperLogo,
 } from './Layout.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const Layout = () => {
   return (
@@ -61,7 +62,7 @@ const Layout = () => {
         </Container>
       </Header>
       <main>
-        <Suspense fallback={<p>Loader...</p>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </main>

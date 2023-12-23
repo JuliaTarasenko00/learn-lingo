@@ -49,6 +49,11 @@ a{
   text-decoration: none;
 }
 
+svg{
+  width: 16px;
+  height: 16px;
+}
+
 
   @font-face {
     font-family: 'RobotoBlack';
