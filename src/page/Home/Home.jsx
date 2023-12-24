@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Container } from 'globalStyles';
 import {
   Button,
@@ -18,6 +19,8 @@ import girl from '../../assets/img/girl.png';
 import mac from '../../assets/img/macimg.png';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   const options = [
     {
       number: '32,000 +',
@@ -50,7 +53,9 @@ const HomePage = () => {
               Tutors: Elevate your language proficiency to new heights by
               connecting with highly qualified and experienced tutors.
             </Description>
-            <Button type="button">Get started</Button>
+            <Button type="button" onClick={() => navigate('teachers')}>
+              Get started
+            </Button>
           </WrapperAbout>
           <WrapperImage>
             <ImgGirl src={girl} alt="girl" width="339" />

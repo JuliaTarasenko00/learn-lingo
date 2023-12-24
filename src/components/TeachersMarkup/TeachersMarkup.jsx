@@ -34,6 +34,9 @@ import {
   WrapperTeacher,
 } from './TeachersMarkup.styled';
 import { Avatar } from '@mui/material';
+import { useModal } from 'helpers/useModal';
+import { ModalComponent } from 'components/Modal/Modal';
+import { BookLesson } from 'components/FormBookLesson/BookLesson';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -66,168 +69,184 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export const TeachersMarkup = () => {
   const [visibility, setVisibility] = useState({});
-  console.log('visibility: ');
+  const [teacher, setTeacher] = useState();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  const onClickModal = id => {
+    setTeacher(teachers[id]);
+    openModal('bookLesson');
+  };
 
   return (
-    <ListTeacher>
-      {teachers.map(
-        (
-          {
-            name,
-            surname,
-            languages,
-            levels,
-            rating,
-            reviews,
-            price_per_hour,
-            lessons_done,
-            avatar_url,
-            lesson_info,
-            conditions,
-            experience,
-          },
-          index
-        ) => {
-          return (
-            <ItemTeacher key={index}>
-              <WrapperImg>
-                <StyledBadge
-                  overlap="circular"
-                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  variant="dot"
-                >
-                  <Avatar
-                    src={avatar_url}
-                    alt={experience}
-                    width="96"
-                    height="96"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  />
-                </StyledBadge>
-              </WrapperImg>
-              <Wrapper>
-                <WrapperLessons>
-                  <Language>Language</Language>
-                  <ListLessons>
-                    <ItemLessons>
-                      <DetailsLessons>
-                        <span className="lesson_online">
-                          <GoBook />
-                        </span>
-                        Lessons online
-                      </DetailsLessons>
-                    </ItemLessons>
-                    <ItemLessons>
-                      <DetailsLessons>
-                        Lessons done: {lessons_done}
-                      </DetailsLessons>
-                    </ItemLessons>
-                    <ItemLessons>
-                      <DetailsLessons>
-                        <span className="rating">
-                          <FaStar />
-                        </span>
-                        Rating: {rating}
-                      </DetailsLessons>
-                    </ItemLessons>
-                    <ItemLessons>
-                      <DetailsLessons>
-                        Price / 1 hour:
-                        <span className="price">{price_per_hour}$</span>
-                      </DetailsLessons>
-                    </ItemLessons>
-                  </ListLessons>
-                </WrapperLessons>
-                <WrapperTeacher>
-                  <NameTeacher>{`${name} ${surname}`}</NameTeacher>
-                  <ListDetailsTeacher>
-                    <ItemDetailsTeacher>
-                      <TitleDetailsTeacher>
-                        <span>Speaks: </span>
-                        <span className="languages">
-                          {languages.join(', ')}
-                        </span>
-                      </TitleDetailsTeacher>
-                    </ItemDetailsTeacher>
-                    <ItemDetailsTeacher>
-                      <TitleDetailsTeacher>
-                        <span>Lesson Info: </span>
-                        {lesson_info}
-                      </TitleDetailsTeacher>
-                    </ItemDetailsTeacher>
-                    <ItemDetailsTeacher>
-                      <TitleDetailsTeacher>
-                        <span>Conditions: </span>
-                        {conditions.join(' ')}
-                      </TitleDetailsTeacher>
-                    </ItemDetailsTeacher>
-                  </ListDetailsTeacher>
-                </WrapperTeacher>
-                {!visibility[index] && (
-                  <ButtonRM
-                    type="button"
-                    onClick={() =>
-                      setVisibility({ ...visibility, [index]: true })
-                    }
+    <>
+      <ListTeacher>
+        {teachers.map(
+          (
+            {
+              name,
+              surname,
+              languages,
+              levels,
+              rating,
+              reviews,
+              price_per_hour,
+              lessons_done,
+              avatar_url,
+              lesson_info,
+              conditions,
+              experience,
+            },
+            index
+          ) => {
+            return (
+              <ItemTeacher key={index}>
+                <WrapperImg>
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    variant="dot"
                   >
-                    Read more
-                  </ButtonRM>
-                )}
-                {visibility[index] && (
-                  <Reviewer>
-                    <ReviewerExperience>{experience}</ReviewerExperience>
-                    <ReviewerList>
-                      {reviews.map(
-                        (
-                          { reviewer_name, reviewer_rating, comment },
-                          index
-                        ) => (
-                          <ReviewerItem key={index}>
-                            <ReviewerWrapper>
-                              <ReviewerImg
-                                src="https://cdn-icons-png.flaticon.com/512/878/878516.png"
-                                alt="reviews"
-                                width="44"
-                                height="44"
-                                loading="lazy"
-                              />
-                              <div>
-                                <ReviewerName>{reviewer_name}</ReviewerName>
-                                <ReviewerRating>
-                                  <span>
-                                    <FaStar />
-                                  </span>
-                                  {reviewer_rating}
-                                </ReviewerRating>
-                              </div>
-                            </ReviewerWrapper>
-                            <ReviewerComment>{comment}</ReviewerComment>
-                          </ReviewerItem>
-                        )
-                      )}
-                    </ReviewerList>
-                  </Reviewer>
-                )}
-                <ListLevels>
-                  {levels.map((i, index) => (
-                    <ItemLevels key={index}>
-                      <p>{i}</p>
-                    </ItemLevels>
-                  ))}
-                </ListLevels>
-                {visibility[index] && (
-                  <ButtonBookLesson type="button">
-                    Book trial lesson
-                  </ButtonBookLesson>
-                )}
-              </Wrapper>
-            </ItemTeacher>
-          );
-        }
+                    <Avatar
+                      src={avatar_url}
+                      alt={experience}
+                      width="96"
+                      height="96"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    />
+                  </StyledBadge>
+                </WrapperImg>
+                <Wrapper>
+                  <WrapperLessons>
+                    <Language>Language</Language>
+                    <ListLessons>
+                      <ItemLessons>
+                        <DetailsLessons>
+                          <span className="lesson_online">
+                            <GoBook />
+                          </span>
+                          Lessons online
+                        </DetailsLessons>
+                      </ItemLessons>
+                      <ItemLessons>
+                        <DetailsLessons>
+                          Lessons done: {lessons_done}
+                        </DetailsLessons>
+                      </ItemLessons>
+                      <ItemLessons>
+                        <DetailsLessons>
+                          <span className="rating">
+                            <FaStar />
+                          </span>
+                          Rating: {rating}
+                        </DetailsLessons>
+                      </ItemLessons>
+                      <ItemLessons>
+                        <DetailsLessons>
+                          Price / 1 hour:
+                          <span className="price">{price_per_hour}$</span>
+                        </DetailsLessons>
+                      </ItemLessons>
+                    </ListLessons>
+                  </WrapperLessons>
+                  <WrapperTeacher>
+                    <NameTeacher>{`${name} ${surname}`}</NameTeacher>
+                    <ListDetailsTeacher>
+                      <ItemDetailsTeacher>
+                        <TitleDetailsTeacher>
+                          <span>Speaks: </span>
+                          <span className="languages">
+                            {languages.join(', ')}
+                          </span>
+                        </TitleDetailsTeacher>
+                      </ItemDetailsTeacher>
+                      <ItemDetailsTeacher>
+                        <TitleDetailsTeacher>
+                          <span>Lesson Info: </span>
+                          {lesson_info}
+                        </TitleDetailsTeacher>
+                      </ItemDetailsTeacher>
+                      <ItemDetailsTeacher>
+                        <TitleDetailsTeacher>
+                          <span>Conditions: </span>
+                          {conditions.join(' ')}
+                        </TitleDetailsTeacher>
+                      </ItemDetailsTeacher>
+                    </ListDetailsTeacher>
+                  </WrapperTeacher>
+                  {!visibility[index] && (
+                    <ButtonRM
+                      type="button"
+                      onClick={() =>
+                        setVisibility({ ...visibility, [index]: true })
+                      }
+                    >
+                      Read more
+                    </ButtonRM>
+                  )}
+                  {visibility[index] && (
+                    <Reviewer>
+                      <ReviewerExperience>{experience}</ReviewerExperience>
+                      <ReviewerList>
+                        {reviews.map(
+                          (
+                            { reviewer_name, reviewer_rating, comment },
+                            index
+                          ) => (
+                            <ReviewerItem key={index}>
+                              <ReviewerWrapper>
+                                <ReviewerImg
+                                  src="https://cdn-icons-png.flaticon.com/512/878/878516.png"
+                                  alt="reviews"
+                                  width="44"
+                                  height="44"
+                                  loading="lazy"
+                                />
+                                <div>
+                                  <ReviewerName>{reviewer_name}</ReviewerName>
+                                  <ReviewerRating>
+                                    <span>
+                                      <FaStar />
+                                    </span>
+                                    {reviewer_rating}
+                                  </ReviewerRating>
+                                </div>
+                              </ReviewerWrapper>
+                              <ReviewerComment>{comment}</ReviewerComment>
+                            </ReviewerItem>
+                          )
+                        )}
+                      </ReviewerList>
+                    </Reviewer>
+                  )}
+                  <ListLevels>
+                    {levels.map((i, index) => (
+                      <ItemLevels key={index}>
+                        <p>{i}</p>
+                      </ItemLevels>
+                    ))}
+                  </ListLevels>
+                  {visibility[index] && (
+                    <ButtonBookLesson
+                      type="button"
+                      onClick={() => onClickModal(index)}
+                    >
+                      Book trial lesson
+                    </ButtonBookLesson>
+                  )}
+                </Wrapper>
+              </ItemTeacher>
+            );
+          }
+        )}
+      </ListTeacher>
+      {isOpen.open && isOpen.name === 'bookLesson' && (
+        <ModalComponent onClose={closeModal}>
+          <BookLesson teacher={teacher} />
+        </ModalComponent>
       )}
-    </ListTeacher>
+    </>
   );
 };

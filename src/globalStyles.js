@@ -54,6 +54,15 @@ svg{
   height: 16px;
 }
 
+::-webkit-scrollbar {
+    width: 15px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background-color: #F4C550;
+    border-radius: 15px;
+  }
+
 
   @font-face {
     font-family: 'RobotoBlack';

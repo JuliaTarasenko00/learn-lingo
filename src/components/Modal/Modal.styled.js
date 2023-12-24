@@ -9,8 +9,12 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
-  backdrop-filter: blur(2px);
+  background: linear-gradient(
+    90deg,
+    rgb(116 115 115) 0%,
+    rgb(83 81 81 / 32%) 0%
+  );
+  backdrop-filter: blur(0.1rem);
   z-index: 1200;
 `;
 
@@ -18,6 +22,7 @@ export const Modal = styled.div`
   position: relative;
   background-color: #fff;
   border-radius: 30px;
+  overflow: hidden;
 `;
 
 export const ButtonClose = styled.button`

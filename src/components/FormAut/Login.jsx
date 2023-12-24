@@ -14,9 +14,7 @@ import {
   InputWrapper,
   PasswordWrapper,
 } from './FormAut.styled';
-
-const emailRegexp =
-  /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+import { emailRegexp } from 'helpers/emailRegexp';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()

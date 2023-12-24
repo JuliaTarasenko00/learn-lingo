@@ -37,15 +37,24 @@ export const Input = styled.input`
   font-weight: 400;
   line-height: 1.37;
   display: block;
+  outline: none;
+  transition: border var(--transition);
 
   &::placeholder {
     color: var(--main-text-color);
+  }
+  &:focus {
+    border: 1px solid var(--active-button-background-color);
   }
 `;
 
 export const ErrorMessage = styled.p`
   color: #ff0000c2;
   margin-top: 5px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.37;
 `;
 
 export const InputWrapper = styled.div`
@@ -77,9 +86,15 @@ export const Button = styled.button`
   line-height: 28px;
 
   border-radius: 12px;
-  background: #f4c550;
+  background-color: var(--button-background-color);
   border: none;
   width: 100%;
   padding: 16px 0;
   margin: 40px auto 0;
+  transition: background-color var(--transition);
+
+  &:hover,
+  :focus {
+    background-color: var(--active-button-background-color);
+  }
 `;
