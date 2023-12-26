@@ -18,7 +18,6 @@ import {
 import { emailRegexp } from 'helpers/emailRegexp';
 import { ERROR_MESSAGES } from 'helpers/error-messages';
 import { auth } from 'config/firebase-config';
-import { addDoc, collection } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { addToken } from 'redux/slice';
 

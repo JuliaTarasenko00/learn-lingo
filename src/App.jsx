@@ -4,8 +4,6 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-const { REACT_APP_API_KEY } = process.env.REACT_APP_API_KEY;
-
 const Layout = lazy(() => import('./components/Layout/Layout'));
 const Home = lazy(() => import('./page/Home/Home'));
 const Teachers = lazy(() => import('./page/Teachers/Teachers'));
