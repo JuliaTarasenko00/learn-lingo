@@ -15,6 +15,7 @@ import {
   WrapperInput,
   ErrorMessage,
 } from './BookLesson.styled';
+import { ERROR_MESSAGES } from 'helpers/error-messages';
 
 const options = [
   { name: 'Career and business', id: '1' },
@@ -26,15 +27,15 @@ const options = [
 
 const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
-    .min(3, 'Name must contain at least 3 characters')
-    .max(50, 'Too Long!')
-    .required('Name required'),
+    .min(3, ERROR_MESSAGES.MIN_NAME)
+    .max(50, ERROR_MESSAGES.MAX_NAME)
+    .required(ERROR_MESSAGES.REQUIRED_NAME),
   email: Yup.string()
-    .matches(emailRegexp, `This is an ERROR email`)
-    .required(`Email required`),
+    .matches(emailRegexp, ERROR_MESSAGES.INVALID_EMAIL)
+    .required(ERROR_MESSAGES.REQUIRED_EMAIL),
   number: Yup.string()
-    .min(17, 'This is an ERROR phone number (Ukrainian format)')
-    .required(`Enter the phone number in Ukrainian format`),
+    .min(17, ERROR_MESSAGES.MIN_PHONE)
+    .required(ERROR_MESSAGES.REQUIRED_PHONE),
 });
 
 export const FormComponent = () => {

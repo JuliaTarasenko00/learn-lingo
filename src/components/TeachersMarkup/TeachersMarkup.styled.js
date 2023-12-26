@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Section = styled.section`
   background-color: #f8f8f8;
+  min-height: calc(100vh - 83px);
   padding-top: 96px;
   padding-bottom: 96px;
 `;

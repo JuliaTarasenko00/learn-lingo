@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { FiEyeOff, FiEye } from 'react-icons/fi';
@@ -15,25 +16,49 @@ import {
   PasswordWrapper,
 } from './FormAut.styled';
 import { emailRegexp } from 'helpers/emailRegexp';
+import { ERROR_MESSAGES } from 'helpers/error-messages';
+import { auth } from 'config/firebase-config';
+import { addDoc, collection } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import { addToken } from 'redux/slice';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Name must contain at least 3 characters')
-    .max(50, 'Too Long!')
-    .required('Name required'),
+    .min(3, ERROR_MESSAGES.MIN_NAME)
+    .max(50, ERROR_MESSAGES.MAX_NAME)
+    .required(ERROR_MESSAGES.REQUIRED_NAME),
   email: Yup.string()
-    .matches(emailRegexp, `This is an ERROR email`)
-    .required(`Email required`),
+    .matches(emailRegexp, ERROR_MESSAGES.INVALID_EMAIL)
+    .required(ERROR_MESSAGES.REQUIRED_EMAIL),
   password: Yup.string()
-    .min(6, 'Password must contain at least 6 characters')
-    .required(`Password required`),
+    .min(6, ERROR_MESSAGES.MIN_PASSWORD)
+    .required(ERROR_MESSAGES.REQUIRED_PASSWORD),
 });
 
-export const Register = () => {
+export const Register = ({ onClose }) => {
   const [visibility, setVisibility] = useState(false);
+  const dispatch = useDispatch();
 
-  const handelSubmit = values => {
-    console.log(values);
+  const handelSubmit = async values => {
+    const { email, password } = values;
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // await addDoc(collection(db, 'users'), {
+      //   name,
+      //   email,
+      //   id: result.user.uid,
+      // });
+
+      dispatch(addToken(result.user.accessToken));
+      onClose();
+      return result;
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (

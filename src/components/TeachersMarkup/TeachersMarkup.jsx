@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import { GoBook } from 'react-icons/go';
 import { FaStar } from 'react-icons/fa';
-import { teachers } from 'helpers/teachers';
 import {
   ButtonBookLesson,
   ButtonRM,
@@ -67,20 +66,20 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export const TeachersMarkup = () => {
+export const TeachersMarkup = ({ item }) => {
   const [visibility, setVisibility] = useState({});
   const [teacher, setTeacher] = useState();
   const { isOpen, openModal, closeModal } = useModal();
 
   const onClickModal = id => {
-    setTeacher(teachers[id]);
+    setTeacher(item[id]);
     openModal('bookLesson');
   };
 
   return (
     <>
       <ListTeacher>
-        {teachers.map(
+        {item.map(
           (
             {
               name,

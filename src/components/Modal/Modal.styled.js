@@ -32,11 +32,11 @@ export const ButtonClose = styled.button`
   cursor: pointer;
   background-color: transparent;
   border: none;
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color var(--transition);
   color: #121417;
   &:hover,
   :focus {
-    color: #3e85f3;
+    color: var(--active-button-background-color);
   }
 
   & svg {
