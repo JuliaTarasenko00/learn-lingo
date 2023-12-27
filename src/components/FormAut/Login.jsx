@@ -18,7 +18,7 @@ import { emailRegexp } from 'helpers/emailRegexp';
 import { ERROR_MESSAGES } from 'helpers/error-messages';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from 'config/firebase-config';
-import { addToken } from 'redux/slice';
+import { addToken } from 'redux/sliceAuth';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { styleToastify } from 'components/toastify';

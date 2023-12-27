@@ -24,7 +24,7 @@ import { Login } from 'components/FormAut/Login';
 import { auth } from 'config/firebase-config';
 import { signOut } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteToken } from 'redux/slice';
+import { deleteToken } from 'redux/sliceAuth';
 
 const Layout = () => {
   const { isOpen, openModal, closeModal } = useModal();

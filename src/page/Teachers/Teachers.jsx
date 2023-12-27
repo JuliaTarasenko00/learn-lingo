@@ -5,12 +5,16 @@ import { ref, child, get } from 'firebase/database';
 import { Container } from 'globalStyles';
 import { useEffect, useState } from 'react';
 import { Button } from './Teacher.styled';
+import { Filter } from 'components/Filter/Filter';
+import { useSelector } from 'react-redux';
 
 const TEACHERS_COLLECTION = 'teachers';
 const TEACHERS_PER_PAGE = 4;
 
 const TeachersPage = () => {
   const [teachers, setTeachers] = useState([]);
+  const filter = useSelector(state => state.filter.filterTeachers);
+
   const [count, setCount] = useState(TEACHERS_PER_PAGE);
   const dbRef = ref(database);
 
@@ -40,11 +44,16 @@ const TeachersPage = () => {
   return (
     <Section>
       <Container>
-        <TeachersMarkup item={limitedTeachers} />
-        {count <= teachers.length && (
-          <Button type="button" onClick={handleMoreButtonClick}>
-            More
-          </Button>
+        <Filter />
+        {filter.length === 0 && (
+          <>
+            <TeachersMarkup item={limitedTeachers} />
+            {count <= teachers.length && (
+              <Button type="button" onClick={handleMoreButtonClick}>
+                More
+              </Button>
+            )}
+          </>
         )}
       </Container>
     </Section>

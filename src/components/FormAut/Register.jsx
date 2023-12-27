@@ -19,7 +19,7 @@ import { emailRegexp } from 'helpers/emailRegexp';
 import { ERROR_MESSAGES } from 'helpers/error-messages';
 import { auth } from 'config/firebase-config';
 import { useDispatch } from 'react-redux';
-import { addToken } from 'redux/slice';
+import { addToken } from 'redux/sliceAuth';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
