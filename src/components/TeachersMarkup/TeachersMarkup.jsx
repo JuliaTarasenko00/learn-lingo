@@ -74,6 +74,8 @@ export const TeachersMarkup = ({ item }) => {
   const onClickModal = id => {
     setTeacher(item[id]);
     openModal('bookLesson');
+
+    setVisibility({ ...visibility, [id]: false });
   };
 
   return (

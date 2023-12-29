@@ -6,7 +6,7 @@ import { TeachersMarkup } from 'components/TeachersMarkup/TeachersMarkup';
 import { database } from 'config/firebase-config';
 import { languages, levels, price } from 'helpers/optionsFilter';
 
-import { addFilter } from 'redux/sliceFilter';
+import { addFilter, addFilterName } from 'redux/sliceFilter';
 import { NotFound, Title, Wrapper } from './Filter.styled';
 
 const Input = styled(Select)(() => ({
@@ -60,6 +60,7 @@ export const Filter = () => {
 
         setItem(prev => ({ ...prev, language }));
 
+        dispatch(addFilterName(selectedLanguage));
         return dispatch(addFilter(language));
       });
     },

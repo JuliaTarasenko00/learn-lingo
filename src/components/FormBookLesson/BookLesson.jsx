@@ -30,7 +30,7 @@ export const BookLesson = ({ teacher }) => {
           <NameTeacher>{teacher?.name}</NameTeacher>
         </WrapperName>
       </WrapperTeacher>
-      <FormComponent />
+      <FormComponent languages={teacher?.languages} />
     </Section>
   );
 };

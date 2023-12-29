@@ -55,6 +55,7 @@ export const Navigate = styled(NavLink)`
 
 export const WrapperAut = styled.ul`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 16px;
 `;

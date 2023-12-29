@@ -16,6 +16,7 @@ import {
   ErrorMessage,
 } from './BookLesson.styled';
 import { ERROR_MESSAGES } from 'helpers/error-messages';
+import { useSelector } from 'react-redux';
 
 const options = [
   { name: 'Career and business', id: '1' },
@@ -38,14 +39,18 @@ const SignupSchema = Yup.object().shape({
     .required(ERROR_MESSAGES.REQUIRED_PHONE),
 });
 
-export const FormComponent = () => {
+export const FormComponent = ({ languages }) => {
+  const language = useSelector(state => state.filter.name);
+
+  const learning = language === '' ? languages.join(', ') : language;
+
   const handelSubmit = values => {
     console.log(values);
   };
 
   return (
     <FormControl>
-      <FormTitle>What is your main reason for learning English?</FormTitle>
+      <FormTitle>What is your main reason for learning {learning}?</FormTitle>
       <Formik
         initialValues={{
           email: '',
