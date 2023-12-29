@@ -9,6 +9,8 @@ export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 20px;
 `;
 
 export const WrapperLogo = styled.div`

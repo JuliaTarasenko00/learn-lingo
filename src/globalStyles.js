@@ -103,7 +103,17 @@ svg{
 `;
 
 export const Container = styled.div`
-  max-width: 1440px;
-  padding: 0 64px;
+  max-width: 345px;
+  padding: 0 14px;
   margin: 0 auto;
+
+  @media screen and (min-width: 500px) {
+    max-width: 500px;
+    padding: 0 20px;
+  }
+
+  @media screen and (min-width: 1000px) {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
 `;

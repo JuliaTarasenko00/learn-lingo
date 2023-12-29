@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import { GoBook } from 'react-icons/go';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaRegHeart } from 'react-icons/fa';
 import {
   ButtonBookLesson,
   ButtonRM,
@@ -147,6 +147,9 @@ export const TeachersMarkup = ({ item }) => {
                           Price / 1 hour:
                           <span className="price">{price_per_hour}$</span>
                         </DetailsLessons>
+                      </ItemLessons>
+                      <ItemLessons>
+                        <FaRegHeart />
                       </ItemLessons>
                     </ListLessons>
                   </WrapperLessons>

@@ -7,28 +7,37 @@ export const Section = styled.section`
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media screen and (min-width: 1000px) {
+    flex-wrap: nowrap;
+  }
 `;
 
 export const WrapperAbout = styled.div`
-  width: 720px;
+  max-width: calc(500px + (720 - 500) * ((100vw - 390px) / (1440 - 390)));
   height: 530px;
-  max-width: 100%;
-  padding: 98px 108px 98px 64px;
+  padding: calc(15px + (64 - 15) * ((100vw - 390px) / (1440 - 390)));
   border-radius: 30px;
   background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Title = styled.h1`
   max-width: 548px;
   color: var(--main-text-color);
-  font-size: 48px;
+  font-size: calc(25px + (48 - 25) * ((100vw - 390px) / (1440 - 390)));
   font-weight: 500;
   line-height: 1.16;
   letter-spacing: -0.96px;
   margin-bottom: 32px;
+
   & span {
-    min-width: 195px;
     font-weight: 400;
     border-radius: 8px;
     background: #fbe9ba;
@@ -38,7 +47,7 @@ export const Title = styled.h1`
 `;
 
 export const Description = styled.p`
-  width: 471px;
+  width: calc(200px + (471 - 200) * ((100vw - 390px) / (1440 - 390)));
   max-width: 100%;
   color: var(--main-text-color);
   font-size: 16px;
@@ -93,13 +102,15 @@ export const ImgMac = styled.img`
 `;
 
 export const ListReviews = styled.ul`
-  height: 116px;
+  min-height: 116px;
   display: flex;
-  gap: 100px;
-  align-items: center;
+  column-gap: 100px;
+  row-gap: 20px;
   justify-content: center;
   border-radius: 30px;
   border: 2px dashed #f4c550;
+  flex-wrap: wrap;
+  padding: 40px 0;
 `;
 
 export const Item = styled.li`

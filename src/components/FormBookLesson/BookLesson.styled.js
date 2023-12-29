@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Section = styled.div`
-  width: 600px;
+  width: 400px;
   max-width: 100%;
-  padding: 64px;
+  padding: 24px;
 
   max-height: 650px;
   overflow-y: scroll;
@@ -15,6 +15,10 @@ export const Section = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: #fbe9ba;
     border-radius: 15px;
+  }
+  @media screen and (min-width: 500px) {
+    width: 600px;
+    padding: 64px;
   }
 `;
 

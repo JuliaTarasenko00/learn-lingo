@@ -20,9 +20,13 @@ export const ItemTeacher = styled.li`
   display: flex;
   gap: 48px;
   align-items: flex-start;
+  flex-direction: column;
 
   &:not(:last-child) {
     margin-bottom: 32px;
+  }
+  @media screen and (min-width: 500px) {
+    flex-direction: row;
   }
 `;
 
@@ -33,15 +37,18 @@ export const WrapperImg = styled.div`
   background: #fff;
   overflow: hidden;
   width: 120px;
-  min-width: 120px;
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  @media screen and (min-width: 500px) {
+    width: calc(100% - 120px);
+  }
+`;
 
 export const WrapperLessons = styled.div`
   display: flex;
   justify-content: space-between;
-
+  gap: 20px;
   margin-bottom: 8px;
 `;
 
@@ -56,7 +63,10 @@ export const Language = styled.p`
 export const ListLessons = styled.ul`
   display: flex;
   align-items: center;
-  gap: 32px;
+  row-gap: 10px;
+  column-gap: 32px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 `;
 
 export const ItemLessons = styled.li``;
@@ -196,6 +206,7 @@ export const ReviewerComment = styled.p``;
 
 export const ListLevels = styled.ul`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 `;
