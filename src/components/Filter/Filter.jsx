@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ref, query, orderByChild, onValue, startAt } from 'firebase/database';
+import { ref, query, orderByChild, onValue } from 'firebase/database';
 import { FormControl, MenuItem, Select, styled } from '@mui/material';
 import { TeachersMarkup } from 'components/TeachersMarkup/TeachersMarkup';
 import { database } from 'config/firebase-config';
 import { languages, levels, price } from 'helpers/optionsFilter';
 
 import { addFilter } from 'redux/sliceFilter';
-import { Title, Wrapper } from './Filter.styled';
+import { NotFound, Title, Wrapper } from './Filter.styled';
 
 const Input = styled(Select)(() => ({
   borderRadius: '14px',
@@ -27,93 +27,90 @@ export const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter.filterTeachers);
   const dbRef = ref(database, 'teachers');
-  const [optionsLanguage, setOptionsLanguage] = useState('');
-  const [optionsLevels, setOptionsLevels] = useState('');
-  const [optionsPrice, setOptionsPrice] = useState('');
+
+  const [options, setOptions] = useState({
+    language: '',
+    levels: '',
+    price: '',
+  });
+  const [item, setItem] = useState({
+    language: [],
+    levels: [],
+  });
   const [search, setSearch] = useState(false);
 
-  const handelClickLanguage = ev => {
-    const selectedLanguage = ev.target.value;
-    setOptionsLanguage(selectedLanguage);
-    setSearch(true);
+  const handelClickLanguage = useCallback(
+    ev => {
+      const selectedLanguage = ev.target.value;
+      setOptions(prev => ({ ...prev, language: selectedLanguage }));
+      setSearch(true);
 
-    if (optionsLanguage !== selectedLanguage) {
-      setOptionsLevels('');
-      setOptionsPrice('');
-    }
+      const q = query(dbRef, orderByChild('languages'));
 
-    const q = query(dbRef, orderByChild('languages'));
+      if (options.language !== selectedLanguage) {
+        setOptions(prev => ({ ...prev, price: '', levels: '' }));
+      }
 
-    onValue(q, snapshot => {
-      const teachers = snapshot.val();
+      onValue(q, snapshot => {
+        const teachers = snapshot.val();
 
-      const teachersFilter =
-        filter.length !== 0 && optionsLanguage === '' ? filter : teachers;
+        const language = Object.keys(teachers)
+          .filter(key => teachers[key].languages.includes(selectedLanguage))
+          .map(key => ({ ...teachers[key] }));
 
-      const language = Object.keys(teachersFilter)
-        .filter(key => teachersFilter[key].languages.includes(selectedLanguage))
-        .map(key => ({ ...teachersFilter[key] }));
+        setItem(prev => ({ ...prev, language }));
 
-      return dispatch(addFilter(language));
-    });
-  };
+        return dispatch(addFilter(language));
+      });
+    },
+    [dbRef, dispatch, options.language]
+  );
 
-  const handelClickLanguageLevel = ev => {
-    const selectedLevels = ev.target.value;
-    setOptionsLevels(selectedLevels);
-    setSearch(true);
+  const handelClickLanguageLevel = useCallback(
+    ev => {
+      const selectedLevels = ev.target.value;
+      setOptions(prev => ({ ...prev, levels: selectedLevels }));
+      setSearch(true);
 
-    const q = query(dbRef, orderByChild('levels'));
+      if (options.price !== '') {
+        setOptions(prev => ({ ...prev, price: '' }));
+      }
 
-    onValue(q, snapshot => {
-      const teachers = snapshot.val();
+      const levels = item.language.filter(teacher =>
+        teacher.levels.includes(selectedLevels)
+      );
 
-      const teachersFilter = filter.length !== 0 ? filter : teachers;
-
-      const levels = Object.keys(teachersFilter)
-        .filter(key => teachersFilter[key].levels.includes(selectedLevels))
-        .map(key => ({ ...teachersFilter[key] }));
+      setItem(prev => ({ ...prev, levels }));
 
       return dispatch(addFilter(levels));
-    });
-  };
+    },
+    [options.price, item, dispatch]
+  );
 
-  const handelClickPrice = ev => {
-    const selectedPrice = ev.target.value;
-    setOptionsPrice(selectedPrice);
-    setSearch(true);
+  const handelClickPrice = useCallback(
+    ev => {
+      const selectedPrice = ev.target.value;
+      setOptions(prev => ({ ...prev, price: selectedPrice }));
+      setSearch(true);
 
-    const dbQuery = query(
-      dbRef,
-      orderByChild('price_per_hour'),
-      startAt(Number(selectedPrice))
-    );
+      const filterByLevel =
+        item.levels.length !== 0 ? item.levels : item.language;
 
-    onValue(dbQuery, snapshot => {
-      const data = snapshot.val();
-
-      const dataArray = Object.values(data);
-
-      const teachers = filter.filter(
+      const teachers = filterByLevel.filter(
         teacher => teacher.price_per_hour >= Number(selectedPrice)
       );
 
-      const teachersFilter = filter.length !== 0 ? teachers : dataArray;
-
-      return dispatch(addFilter(teachersFilter));
-    });
-  };
+      return dispatch(addFilter(teachers));
+    },
+    [item, dispatch]
+  );
 
   return (
     <>
       <Wrapper>
         <FormControl sx={{ marginRight: '20px', minWidth: 221 }} size="small">
           <Title>Languages</Title>
-          <Input
-            id="demo-select-small"
-            value={optionsLanguage}
-            onChange={handelClickLanguage}
-          >
+          <Input value={options.language} onChange={handelClickLanguage}>
             {languages.map((options, index) => (
               <MenuItem value={options} key={index}>
                 <em>{options}</em>
@@ -124,7 +121,11 @@ export const Filter = () => {
         <FormControl sx={{ marginRight: '20px', minWidth: 198 }} size="small">
           <Title>Level of knowledge</Title>
 
-          <Input value={optionsLevels} onChange={handelClickLanguageLevel}>
+          <Input
+            value={options.levels}
+            onChange={handelClickLanguageLevel}
+            disabled={options.language === ''}
+          >
             {levels.map((options, index) => (
               <MenuItem value={options} key={index}>
                 <em>{options}</em>
@@ -134,7 +135,11 @@ export const Filter = () => {
         </FormControl>
         <FormControl sx={{ minWidth: 124 }} size="small">
           <Title>Price</Title>
-          <Input value={optionsPrice} onChange={handelClickPrice}>
+          <Input
+            value={options.price}
+            onChange={handelClickPrice}
+            disabled={options.language === ''}
+          >
             {price.map((options, index) => (
               <MenuItem value={options} key={index}>
                 <em>{options}</em>
@@ -144,10 +149,10 @@ export const Filter = () => {
         </FormControl>
       </Wrapper>
       {filter.length === 0 && search && (
-        <p>
+        <NotFound>
           Oops, unfortunately, we did not find among our teachers according to
           your criteria. You can choose from our list 😊
-        </p>
+        </NotFound>
       )}
       <TeachersMarkup item={filter} />
     </>
