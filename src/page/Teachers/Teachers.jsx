@@ -1,7 +1,7 @@
 import { TeachersMarkup } from 'components/TeachersMarkup/TeachersMarkup';
 import { Section } from 'components/TeachersMarkup/TeachersMarkup.styled';
 import { database } from 'config/firebase-config';
-import { ref, child, get, set } from 'firebase/database';
+import { ref, child, get } from 'firebase/database';
 import { Container } from 'globalStyles';
 import { useEffect, useState } from 'react';
 import { Button } from './Teacher.styled';
