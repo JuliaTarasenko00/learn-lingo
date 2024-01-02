@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
+import { set, ref } from 'firebase/database';
 import { GoBook } from 'react-icons/go';
 import { FaStar, FaRegHeart } from 'react-icons/fa';
 import {
   ButtonBookLesson,
   ButtonRM,
   DetailsLessons,
+  FavoriteButton,
   ItemDetailsTeacher,
   ItemLessons,
   ItemLevels,
@@ -36,6 +38,8 @@ import { Avatar } from '@mui/material';
 import { useModal } from 'helpers/useModal';
 import { ModalComponent } from 'components/Modal/Modal';
 import { BookLesson } from 'components/FormBookLesson/BookLesson';
+import { useSelector } from 'react-redux';
+import { auth, database } from 'config/firebase-config';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -70,37 +74,49 @@ export const TeachersMarkup = ({ item }) => {
   const [visibility, setVisibility] = useState({});
   const [teacher, setTeacher] = useState();
   const { isOpen, openModal, closeModal } = useModal();
+  const authUser = useSelector(state => state.authUser.token);
 
   const onClickModal = id => {
-    setTeacher(item[id]);
+    const detailsTeacher = item.find(teacher => teacher.id === id);
+    setTeacher(detailsTeacher);
     openModal('bookLesson');
 
     setVisibility({ ...visibility, [id]: false });
+  };
+
+  const handelClick = id => {
+    if (!authUser) {
+      return openModal('notAuth');
+    }
+
+    const favoriteTeacher = item.find(teacher => teacher.id === id);
+
+    const userRef = ref(database, `/favorite/${auth.currentUser.uid}/${id}`);
+
+    set(userRef, favoriteTeacher);
   };
 
   return (
     <>
       <ListTeacher>
         {item.map(
-          (
-            {
-              name,
-              surname,
-              languages,
-              levels,
-              rating,
-              reviews,
-              price_per_hour,
-              lessons_done,
-              avatar_url,
-              lesson_info,
-              conditions,
-              experience,
-            },
-            index
-          ) => {
+          ({
+            name,
+            surname,
+            languages,
+            levels,
+            rating,
+            reviews,
+            price_per_hour,
+            lessons_done,
+            avatar_url,
+            lesson_info,
+            conditions,
+            experience,
+            id,
+          }) => {
             return (
-              <ItemTeacher key={index}>
+              <ItemTeacher key={id}>
                 <WrapperImg>
                   <StyledBadge
                     overlap="circular"
@@ -151,7 +167,12 @@ export const TeachersMarkup = ({ item }) => {
                         </DetailsLessons>
                       </ItemLessons>
                       <ItemLessons>
-                        <FaRegHeart />
+                        <FavoriteButton
+                          type="button"
+                          onClick={() => handelClick(id)}
+                        >
+                          <FaRegHeart />
+                        </FavoriteButton>
                       </ItemLessons>
                     </ListLessons>
                   </WrapperLessons>
@@ -180,17 +201,17 @@ export const TeachersMarkup = ({ item }) => {
                       </ItemDetailsTeacher>
                     </ListDetailsTeacher>
                   </WrapperTeacher>
-                  {!visibility[index] && (
+                  {!visibility[id] && (
                     <ButtonRM
                       type="button"
                       onClick={() =>
-                        setVisibility({ ...visibility, [index]: true })
+                        setVisibility({ ...visibility, [id]: true })
                       }
                     >
                       Read more
                     </ButtonRM>
                   )}
-                  {visibility[index] && (
+                  {visibility[id] && (
                     <Reviewer>
                       <ReviewerExperience>{experience}</ReviewerExperience>
                       <ReviewerList>
@@ -232,10 +253,10 @@ export const TeachersMarkup = ({ item }) => {
                       </ItemLevels>
                     ))}
                   </ListLevels>
-                  {visibility[index] && (
+                  {visibility[id] && (
                     <ButtonBookLesson
                       type="button"
-                      onClick={() => onClickModal(index)}
+                      onClick={() => onClickModal(id)}
                     >
                       Book trial lesson
                     </ButtonBookLesson>
@@ -249,6 +270,11 @@ export const TeachersMarkup = ({ item }) => {
       {isOpen.open && isOpen.name === 'bookLesson' && (
         <ModalComponent onClose={closeModal}>
           <BookLesson teacher={teacher} />
+        </ModalComponent>
+      )}
+      {isOpen.open && isOpen.name === 'notAuth' && (
+        <ModalComponent onClose={closeModal}>
+          <p style={{ padding: 60 }}>Not Auth</p>
         </ModalComponent>
       )}
     </>

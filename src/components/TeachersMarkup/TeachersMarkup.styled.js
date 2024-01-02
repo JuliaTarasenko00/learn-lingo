@@ -243,3 +243,22 @@ export const ButtonBookLesson = styled.button`
   border-radius: 12px;
   background-color: #f4c550;
 `;
+
+export const FavoriteButton = styled.button`
+  cursor: pointer;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #000;
+  transition: color var(--transition);
+
+  & svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  &:hover,
+  :focus {
+    color: var(--active-color);
+  }
+`;
