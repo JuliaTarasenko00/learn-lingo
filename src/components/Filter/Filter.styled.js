@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding-bottom: 32px;
+  position: relative;
 `;
 
 export const Title = styled.p`
@@ -23,4 +24,26 @@ export const NotFound = styled.p`
 
 export const Em = styled.em`
   font-style: normal;
+`;
+
+export const Button = styled.button`
+  cursor: pointer;
+  border: none;
+  color: #000;
+  background-color: transparent;
+  transition: color var(--transition);
+
+  position: absolute;
+  bottom: 20px;
+  transform: translate(0, -15px);
+
+  &:hover,
+  :focus {
+    color: var(--active-color);
+  }
+
+  & svg {
+    width: 26px;
+    height: 26px;
+  }
 `;

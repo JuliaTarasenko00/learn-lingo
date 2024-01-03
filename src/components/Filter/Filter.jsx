@@ -1,13 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ref, query, orderByChild, onValue } from 'firebase/database';
 import { FormControl, MenuItem, Select, styled } from '@mui/material';
 import { TeachersMarkup } from 'components/TeachersMarkup/TeachersMarkup';
 import { database } from 'config/firebase-config';
 import { languages, levels, price } from 'helpers/optionsFilter';
-
-import { addFilter, addFilterName } from 'redux/sliceFilter';
-import { Em, NotFound, Title, Wrapper } from './Filter.styled';
+import { TiDelete } from 'react-icons/ti';
+import { addFilter, addFilterName, deleteFilter } from 'redux/sliceFilter';
+import { Button, Em, NotFound, Title, Wrapper } from './Filter.styled';
+import { useLocation } from 'react-router-dom';
 
 const Input = styled(Select)(() => ({
   fontFamily: '"Roboto", sans-serif',
@@ -27,6 +28,8 @@ const Input = styled(Select)(() => ({
 export const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter.filterTeachers);
+  const { pathname } = useLocation();
+
   const dbRef = ref(database, 'teachers');
 
   const [options, setOptions] = useState({
@@ -107,6 +110,23 @@ export const Filter = () => {
     [item, dispatch]
   );
 
+  useEffect(() => {
+    if (pathname !== '/teacher') {
+      dispatch(deleteFilter());
+    }
+  }, [dispatch, pathname]);
+
+  const clearFilter = () => {
+    setOptions({
+      language: '',
+      levels: '',
+      price: '',
+    });
+
+    setSearch(false);
+    return dispatch(deleteFilter());
+  };
+
   return (
     <>
       <Wrapper>
@@ -122,7 +142,6 @@ export const Filter = () => {
         </FormControl>
         <FormControl sx={{ marginRight: '20px', minWidth: 198 }} size="small">
           <Title>Level of knowledge</Title>
-
           <Input
             value={options.levels}
             onChange={handelClickLanguageLevel}
@@ -149,6 +168,11 @@ export const Filter = () => {
             ))}
           </Input>
         </FormControl>
+        {Object.values(options).join('') !== '' && (
+          <Button type="button" onClick={clearFilter}>
+            <TiDelete />
+          </Button>
+        )}
       </Wrapper>
       {filter.length === 0 && search && (
         <NotFound>

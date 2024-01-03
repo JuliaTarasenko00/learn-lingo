@@ -68,13 +68,20 @@ export const PasswordWrapper = styled.div`
 `;
 
 export const PasswordVisibility = styled.button`
+  cursor: pointer;
   position: absolute;
   top: 50%;
   right: 18px;
   transform: translateY(-50%);
-
+  color: var(--main-text-color);
+  transition: color var(--transition);
   background-color: transparent;
   border: none;
+
+  &:hover,
+  :focus {
+    color: var(--active-color);
+  }
 `;
 
 export const Button = styled.button`

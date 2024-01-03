@@ -129,6 +129,7 @@ export const TitleDetailsTeacher = styled.p`
 `;
 
 export const ButtonRM = styled.button`
+  cursor: pointer;
   color: var(--main-text-color);
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -242,6 +243,12 @@ export const ButtonBookLesson = styled.button`
   padding: 16px 48px;
   border-radius: 12px;
   background-color: #f4c550;
+  transition: background-color var(--transition);
+
+  &:hover,
+  :focus {
+    background-color: #ffdc86;
+  }
 `;
 
 export const FavoriteButton = styled.button`
