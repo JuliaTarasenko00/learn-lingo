@@ -20,3 +20,7 @@ export const NotFound = styled.p`
   font-weight: 500;
   line-height: 1.5;
 `;
+
+export const Em = styled.em`
+  font-style: normal;
+`;

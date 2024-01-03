@@ -47,7 +47,7 @@ const TeachersPage = () => {
         <Filter />
         {filter.length === 0 && (
           <>
-            <TeachersMarkup item={limitedTeachers} />
+            <TeachersMarkup item={limitedTeachers} allTeacher={teachers} />
             {count <= teachers.length && (
               <Button type="button" onClick={handleMoreButtonClick}>
                 More

@@ -8,6 +8,7 @@ const Layout = lazy(() => import('./components/Layout/Layout'));
 const Home = lazy(() => import('./page/Home/Home'));
 const Teachers = lazy(() => import('./page/Teachers/Teachers'));
 const Favorite = lazy(() => import('./page/Favorite/Favorite'));
+const NotFoundPage = lazy(() => import('./page/NotFoundPage/NotFoundPage'));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </Suspense>

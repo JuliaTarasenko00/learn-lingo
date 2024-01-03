@@ -7,9 +7,10 @@ import { database } from 'config/firebase-config';
 import { languages, levels, price } from 'helpers/optionsFilter';
 
 import { addFilter, addFilterName } from 'redux/sliceFilter';
-import { NotFound, Title, Wrapper } from './Filter.styled';
+import { Em, NotFound, Title, Wrapper } from './Filter.styled';
 
 const Input = styled(Select)(() => ({
+  fontFamily: '"Roboto", sans-serif',
   borderRadius: '14px',
   backgroundColor: '#fff',
   '& .MuiOutlinedInput-notchedOutline': {
@@ -114,7 +115,7 @@ export const Filter = () => {
           <Input value={options.language} onChange={handelClickLanguage}>
             {languages.map((options, index) => (
               <MenuItem value={options} key={index}>
-                <em>{options}</em>
+                <Em>{options}</Em>
               </MenuItem>
             ))}
           </Input>
@@ -129,7 +130,7 @@ export const Filter = () => {
           >
             {levels.map((options, index) => (
               <MenuItem value={options} key={index}>
-                <em>{options}</em>
+                <Em>{options}</Em>
               </MenuItem>
             ))}
           </Input>
@@ -143,7 +144,7 @@ export const Filter = () => {
           >
             {price.map((options, index) => (
               <MenuItem value={options} key={index}>
-                <em>{options}</em>
+                <Em>{options}</Em>
               </MenuItem>
             ))}
           </Input>

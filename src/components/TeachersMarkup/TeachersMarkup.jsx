@@ -1,38 +1,15 @@
 import { useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Badge from '@mui/material/Badge';
-import { set, ref } from 'firebase/database';
-import { GoBook } from 'react-icons/go';
-import { FaStar, FaRegHeart } from 'react-icons/fa';
+import { set, ref, remove } from 'firebase/database';
+
 import {
   ButtonBookLesson,
   ButtonRM,
-  DetailsLessons,
-  FavoriteButton,
-  ItemDetailsTeacher,
-  ItemLessons,
   ItemLevels,
   ItemTeacher,
-  Language,
-  ListDetailsTeacher,
-  ListLessons,
   ListLevels,
   ListTeacher,
-  NameTeacher,
-  Reviewer,
-  ReviewerComment,
-  ReviewerExperience,
-  ReviewerImg,
-  ReviewerItem,
-  ReviewerList,
-  ReviewerName,
-  ReviewerRating,
-  ReviewerWrapper,
-  TitleDetailsTeacher,
   Wrapper,
   WrapperImg,
-  WrapperLessons,
-  WrapperTeacher,
 } from './TeachersMarkup.styled';
 import { Avatar } from '@mui/material';
 import { useModal } from 'helpers/useModal';
@@ -40,41 +17,18 @@ import { ModalComponent } from 'components/Modal/Modal';
 import { BookLesson } from 'components/FormBookLesson/BookLesson';
 import { useSelector } from 'react-redux';
 import { auth, database } from 'config/firebase-config';
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    backgroundColor: '#44b700',
-    color: '#44b700',
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    '&::after': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      borderRadius: '50%',
-      animation: 'ripple 1.2s infinite ease-in-out',
-      border: '1px solid currentColor',
-      content: '""',
-    },
-  },
-  '@keyframes ripple': {
-    '0%': {
-      transform: 'scale(.8)',
-      opacity: 1,
-    },
-    '100%': {
-      transform: 'scale(2.4)',
-      opacity: 0,
-    },
-  },
-}));
+import { useFavorite } from 'helpers/favorite';
+import { StyledBadge } from './StyledBadge';
+import { ReviewerComponent } from './Reviewer';
+import { AboutTeacher } from './AboutTeacher';
+import { NotAuth } from './NotAuth';
 
 export const TeachersMarkup = ({ item }) => {
   const [visibility, setVisibility] = useState({});
   const [teacher, setTeacher] = useState();
   const { isOpen, openModal, closeModal } = useModal();
   const authUser = useSelector(state => state.authUser.token);
+  const favorite = useFavorite(database);
 
   const onClickModal = id => {
     const detailsTeacher = item.find(teacher => teacher.id === id);
@@ -84,16 +38,31 @@ export const TeachersMarkup = ({ item }) => {
     setVisibility({ ...visibility, [id]: false });
   };
 
-  const handelClick = id => {
-    if (!authUser) {
-      return openModal('notAuth');
-    }
+  const deleteFavorite = id => {
+    const favRef = ref(database, `/favorite/${auth.currentUser.uid}/${id}`);
+    return remove(favRef);
+  };
 
+  const addFavorite = id => {
     const favoriteTeacher = item.find(teacher => teacher.id === id);
 
     const userRef = ref(database, `/favorite/${auth.currentUser.uid}/${id}`);
 
     set(userRef, favoriteTeacher);
+  };
+
+  const handelClick = id => {
+    if (!authUser) {
+      return openModal('notAuth');
+    }
+
+    const isFavorite = favorite.find(item => item.id === id);
+
+    if (isFavorite) {
+      return deleteFavorite(id);
+    } else {
+      return addFavorite(id);
+    }
   };
 
   return (
@@ -136,71 +105,20 @@ export const TeachersMarkup = ({ item }) => {
                   </StyledBadge>
                 </WrapperImg>
                 <Wrapper>
-                  <WrapperLessons>
-                    <Language>Language</Language>
-                    <ListLessons>
-                      <ItemLessons>
-                        <DetailsLessons>
-                          <span className="lesson_online">
-                            <GoBook />
-                          </span>
-                          Lessons online
-                        </DetailsLessons>
-                      </ItemLessons>
-                      <ItemLessons>
-                        <DetailsLessons>
-                          Lessons done: {lessons_done}
-                        </DetailsLessons>
-                      </ItemLessons>
-                      <ItemLessons>
-                        <DetailsLessons>
-                          <span className="rating">
-                            <FaStar />
-                          </span>
-                          Rating: {rating}
-                        </DetailsLessons>
-                      </ItemLessons>
-                      <ItemLessons>
-                        <DetailsLessons>
-                          Price / 1 hour:
-                          <span className="price">{price_per_hour}$</span>
-                        </DetailsLessons>
-                      </ItemLessons>
-                      <ItemLessons>
-                        <FavoriteButton
-                          type="button"
-                          onClick={() => handelClick(id)}
-                        >
-                          <FaRegHeart />
-                        </FavoriteButton>
-                      </ItemLessons>
-                    </ListLessons>
-                  </WrapperLessons>
-                  <WrapperTeacher>
-                    <NameTeacher>{`${name} ${surname}`}</NameTeacher>
-                    <ListDetailsTeacher>
-                      <ItemDetailsTeacher>
-                        <TitleDetailsTeacher>
-                          <span>Speaks: </span>
-                          <span className="languages">
-                            {languages.join(', ')}
-                          </span>
-                        </TitleDetailsTeacher>
-                      </ItemDetailsTeacher>
-                      <ItemDetailsTeacher>
-                        <TitleDetailsTeacher>
-                          <span>Lesson Info: </span>
-                          {lesson_info}
-                        </TitleDetailsTeacher>
-                      </ItemDetailsTeacher>
-                      <ItemDetailsTeacher>
-                        <TitleDetailsTeacher>
-                          <span>Conditions: </span>
-                          {conditions.join(' ')}
-                        </TitleDetailsTeacher>
-                      </ItemDetailsTeacher>
-                    </ListDetailsTeacher>
-                  </WrapperTeacher>
+                  <AboutTeacher
+                    lessons_done={lessons_done}
+                    rating={rating}
+                    price_per_hour={price_per_hour}
+                    favorite={favorite}
+                    id={id}
+                    authUser={authUser}
+                    handelClick={handelClick}
+                    name={name}
+                    surname={surname}
+                    languages={languages}
+                    lesson_info={lesson_info}
+                    conditions={conditions}
+                  />
                   {!visibility[id] && (
                     <ButtonRM
                       type="button"
@@ -212,39 +130,10 @@ export const TeachersMarkup = ({ item }) => {
                     </ButtonRM>
                   )}
                   {visibility[id] && (
-                    <Reviewer>
-                      <ReviewerExperience>{experience}</ReviewerExperience>
-                      <ReviewerList>
-                        {reviews.map(
-                          (
-                            { reviewer_name, reviewer_rating, comment },
-                            index
-                          ) => (
-                            <ReviewerItem key={index}>
-                              <ReviewerWrapper>
-                                <ReviewerImg
-                                  src="https://cdn-icons-png.flaticon.com/512/878/878516.png"
-                                  alt="reviews"
-                                  width="44"
-                                  height="44"
-                                  loading="lazy"
-                                />
-                                <div>
-                                  <ReviewerName>{reviewer_name}</ReviewerName>
-                                  <ReviewerRating>
-                                    <span>
-                                      <FaStar />
-                                    </span>
-                                    {reviewer_rating}
-                                  </ReviewerRating>
-                                </div>
-                              </ReviewerWrapper>
-                              <ReviewerComment>{comment}</ReviewerComment>
-                            </ReviewerItem>
-                          )
-                        )}
-                      </ReviewerList>
-                    </Reviewer>
+                    <ReviewerComponent
+                      experience={experience}
+                      reviews={reviews}
+                    />
                   )}
                   <ListLevels>
                     {levels.map((i, index) => (
@@ -274,7 +163,7 @@ export const TeachersMarkup = ({ item }) => {
       )}
       {isOpen.open && isOpen.name === 'notAuth' && (
         <ModalComponent onClose={closeModal}>
-          <p style={{ padding: 60 }}>Not Auth</p>
+          <NotAuth />
         </ModalComponent>
       )}
     </>

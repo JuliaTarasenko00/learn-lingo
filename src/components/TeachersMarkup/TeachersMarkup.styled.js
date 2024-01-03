@@ -262,3 +262,19 @@ export const FavoriteButton = styled.button`
     color: var(--active-color);
   }
 `;
+
+export const NotAuthSection = styled.div`
+  padding: calc(20px + (40 - 20) * ((100vw - 390px) / (1440 - 390)));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const TitleNotAuth = styled.p`
+  margin-top: 40px;
+  color: var(--main-text-color);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  max-width: 300px;
+`;
