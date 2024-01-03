@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunklearn_lingo=self.webpackChunklearn_lingo||[]).push([[460],{4268:(n,a,e)=>{e.r(a),e.d(a,{default:()=>u});var t=e(7586);const c=e.p+"static/media/not_found.c97b5da55a08df19f5eb.png";var s,i,l=e(168),o=e(8470);const r=o.ZP.section(s||(s=(0,l.Z)([""]))),d=o.ZP.img(i||(i=(0,l.Z)(["\n  max-width: 100%;\n  margin: 0 auto;\n  height: calc(100vh - 83px);\n"])));var h=e(184);const u=()=>(0,h.jsx)(r,{children:(0,h.jsx)(t.W,{children:(0,h.jsx)(d,{src:c,alt:"Page not found"})})})}}]);
+//# sourceMappingURL=460.410ac10e.chunk.js.map
