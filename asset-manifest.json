@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/learn-lingo/static/css/main.7cda0caf.css",
-    "main.js": "/learn-lingo/static/js/main.aa2c3f26.js",
+    "main.js": "/learn-lingo/static/js/main.1d05981d.js",
     "static/css/773.54f21f9a.chunk.css": "/learn-lingo/static/css/773.54f21f9a.chunk.css",
     "static/js/773.59a766c4.chunk.js": "/learn-lingo/static/js/773.59a766c4.chunk.js",
     "static/js/126.6c17f0c8.chunk.js": "/learn-lingo/static/js/126.6c17f0c8.chunk.js",
-    "static/js/913.5cf28772.chunk.js": "/learn-lingo/static/js/913.5cf28772.chunk.js",
+    "static/js/913.0753b42a.chunk.js": "/learn-lingo/static/js/913.0753b42a.chunk.js",
     "static/js/513.920c295f.chunk.js": "/learn-lingo/static/js/513.920c295f.chunk.js",
     "static/js/460.410ac10e.chunk.js": "/learn-lingo/static/js/460.410ac10e.chunk.js",
     "static/js/809.af2717df.chunk.js": "/learn-lingo/static/js/809.af2717df.chunk.js",
@@ -23,11 +23,11 @@
     "static/media/not_found.png": "/learn-lingo/static/media/not_found.c97b5da55a08df19f5eb.png",
     "index.html": "/learn-lingo/index.html",
     "main.7cda0caf.css.map": "/learn-lingo/static/css/main.7cda0caf.css.map",
-    "main.aa2c3f26.js.map": "/learn-lingo/static/js/main.aa2c3f26.js.map",
+    "main.1d05981d.js.map": "/learn-lingo/static/js/main.1d05981d.js.map",
     "773.54f21f9a.chunk.css.map": "/learn-lingo/static/css/773.54f21f9a.chunk.css.map",
     "773.59a766c4.chunk.js.map": "/learn-lingo/static/js/773.59a766c4.chunk.js.map",
     "126.6c17f0c8.chunk.js.map": "/learn-lingo/static/js/126.6c17f0c8.chunk.js.map",
-    "913.5cf28772.chunk.js.map": "/learn-lingo/static/js/913.5cf28772.chunk.js.map",
+    "913.0753b42a.chunk.js.map": "/learn-lingo/static/js/913.0753b42a.chunk.js.map",
     "513.920c295f.chunk.js.map": "/learn-lingo/static/js/513.920c295f.chunk.js.map",
     "460.410ac10e.chunk.js.map": "/learn-lingo/static/js/460.410ac10e.chunk.js.map",
     "809.af2717df.chunk.js.map": "/learn-lingo/static/js/809.af2717df.chunk.js.map",
@@ -38,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.7cda0caf.css",
-    "static/js/main.aa2c3f26.js"
+    "static/js/main.1d05981d.js"
   ]
 }
