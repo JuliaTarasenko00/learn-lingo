@@ -105,7 +105,11 @@ export const Filter = () => {
         teacher => teacher.price_per_hour >= Number(selectedPrice)
       );
 
-      return dispatch(addFilter(teachers));
+      const teacherSort = [...teachers].sort(
+        (a, b) => a.price_per_hour - b.price_per_hour
+      );
+
+      return dispatch(addFilter(teacherSort));
     },
     [item, dispatch]
   );
